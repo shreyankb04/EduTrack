@@ -1,0 +1,84 @@
+
+{% extends 'students/base.html' %}
+
+{% block title %}Course Management | EduTrack{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+        <h2 class="fw-bold">Course Management</h2>
+        <p class="text-muted">Manage available courses and student enrollments.</p>
+    </div>
+
+    <a href="{% url 'add_course' %}" class="btn btn-primary px-4">
+        + Add Course
+    </a>
+
+</div>
+
+
+<div class="card content-card p-4">
+
+    <h5 class="fw-bold mb-4">Available Courses</h5>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Description</th>
+                    <th>Enrolled Students</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for course in courses %}
+
+                <tr>
+
+                    <td class="fw-semibold">
+                        {{ course.name }}
+                    </td>
+
+                    <td>
+                        {{ course.description|default:"No description available" }}
+                    </td>
+
+                    <td>
+                        <span class="badge bg-primary">
+                            {{ course.student_set.count }}
+                        </span>
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="3" class="text-center text-muted py-4">
+                        No courses available. Add your first course!
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="mt-3">
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">
+            Back to Dashboard
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}
